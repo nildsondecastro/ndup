@@ -2,11 +2,17 @@
 
 namespace App\Models;
 
-use App\Models\Base\User as BaseUser;
+use App\Models\Portfolio;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
+	use SoftDeletes;
+	protected $table = 'users';
+
 	protected $hidden = [
 		'password',
 		'remember_token'
@@ -17,19 +23,18 @@ class User extends Authenticatable
 		'email',
 		'email_verified_at',
 		'password',
+		'cpf',
 		'photo',
 		'active',
 		'admin',
-		'shops_id',
+		'super_admin',
 		'remember_token'
 	];
 
 	protected $casts = [];
 
-	protected $rules = [];
-
-	public function shop()
+	public function portfolios()
 	{
-		return $this->belongsTo(Shop::class, 'shops_id');
+		return $this->hasMany(Portfolio::class, 'users_id');
 	}
 }

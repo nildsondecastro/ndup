@@ -6,8 +6,7 @@
 
 namespace App\Models\Base;
 
-use App\Models\Permission;
-use App\Models\Shop;
+use App\Models\Portfolio;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -20,18 +19,17 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property character varying $email
  * @property timestamp without time zone|null $email_verified_at
  * @property character varying $password
+ * @property character varying|null $cpf
  * @property character varying|null $photo
  * @property bool $active
  * @property bool $admin
- * @property bool $shop_admin
- * @property int|null $shops_id
+ * @property bool $super_admin
  * @property character varying|null $remember_token
  * @property timestamp without time zone|null $created_at
  * @property timestamp without time zone|null $updated_at
  * @property string|null $deleted_at
  * 
- * @property Shop|null $shop
- * @property Collection|Permission[] $permissions
+ * @property Collection|Portfolio[] $portfolios
  *
  * @package App\Models\Base
  */
@@ -45,23 +43,18 @@ class User extends Model
 		'email' => 'character varying',
 		'email_verified_at' => 'timestamp without time zone',
 		'password' => 'character varying',
+		'cpf' => 'character varying',
 		'photo' => 'character varying',
 		'active' => 'bool',
 		'admin' => 'bool',
-		'shop_admin' => 'bool',
-		'shops_id' => 'int',
+		'super_admin' => 'bool',
 		'remember_token' => 'character varying',
 		'created_at' => 'timestamp without time zone',
 		'updated_at' => 'timestamp without time zone'
 	];
 
-	public function shop()
+	public function portfolios()
 	{
-		return $this->belongsTo(Shop::class, 'shops_id');
-	}
-
-	public function permissions()
-	{
-		return $this->hasMany(Permission::class, 'users_id');
+		return $this->hasMany(Portfolio::class, 'users_id');
 	}
 }

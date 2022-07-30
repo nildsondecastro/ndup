@@ -19,16 +19,13 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+
+            $table->string('cpf')->nullable();
             $table->string('photo')->nullable();
 
             $table->boolean('active')->default(true);
             $table->boolean('admin')->default(false);
-            $table->boolean('shop_admin')->default(false);
-
-            $table->bigInteger('shops_id')->nullable();
-            $table->foreign('shops_id')
-                ->references('shops_id')
-                ->on('shops');
+            $table->boolean('super_admin')->default(false);
 
             $table->rememberToken();
             $table->timestamps();
